@@ -37,7 +37,7 @@ module.exports = {
   },
   plugins: [
     new HTMLWebpackPlugin({
-      template: "./index.html", //template that webpack builds base html off
+      template: "/client/index.html", //template that webpack builds base html off
     }),
   ],
   devServer: {

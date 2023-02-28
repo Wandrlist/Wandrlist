@@ -1,69 +1,13 @@
-<head><script defer src="/bundle.js"></script></head>Html Webpack Plugin:
-<pre>
-  Error: Child compilation failed:
-  Module not found: Error: Can't resolve '/Users/paulinenguyen/Codesmith/Wandrlist/index.html' in '/Users/paulinenguyen/Codesmith/Wandrlist'
-  ModuleNotFoundError: Module not found: Error: Can't resolve '/Users/paulinenguyen/Codesmith/Wandrlist/index.html' in '/Users/paulinenguyen/Codesmith/Wandrlist'
-      at /Users/paulinenguyen/Codesmith/Wandrlist/node_modules/webpack/lib/Compilation.js:2016:28
-      at /Users/paulinenguyen/Codesmith/Wandrlist/node_modules/webpack/lib/NormalModuleFactory.js:798:13
-      at eval (eval at create (/Users/paulinenguyen/Codesmith/Wandrlist/node_modules/tapable/lib/HookCodeFactory.js:33:10), <anonymous>:10:1)
-      at /Users/paulinenguyen/Codesmith/Wandrlist/node_modules/webpack/lib/NormalModuleFactory.js:270:22
-      at eval (eval at create (/Users/paulinenguyen/Codesmith/Wandrlist/node_modules/tapable/lib/HookCodeFactory.js:33:10), <anonymous>:9:1)
-      at /Users/paulinenguyen/Codesmith/Wandrlist/node_modules/webpack/lib/NormalModuleFactory.js:434:22
-      at /Users/paulinenguyen/Codesmith/Wandrlist/node_modules/webpack/lib/NormalModuleFactory.js:120:11
-      at /Users/paulinenguyen/Codesmith/Wandrlist/node_modules/webpack/lib/NormalModuleFactory.js:670:25
-      at /Users/paulinenguyen/Codesmith/Wandrlist/node_modules/webpack/lib/NormalModuleFactory.js:855:8
-      at /Users/paulinenguyen/Codesmith/Wandrlist/node_modules/webpack/lib/NormalModuleFactory.js:975:5
-  
-  - Compilation.js:2016 
-    [Wandrlist]/[webpack]/lib/Compilation.js:2016:28
-  
-  - NormalModuleFactory.js:798 
-    [Wandrlist]/[webpack]/lib/NormalModuleFactory.js:798:13
-  
-  
-  - NormalModuleFactory.js:270 
-    [Wandrlist]/[webpack]/lib/NormalModuleFactory.js:270:22
-  
-  
-  - NormalModuleFactory.js:434 
-    [Wandrlist]/[webpack]/lib/NormalModuleFactory.js:434:22
-  
-  - NormalModuleFactory.js:120 
-    [Wandrlist]/[webpack]/lib/NormalModuleFactory.js:120:11
-  
-  - NormalModuleFactory.js:670 
-    [Wandrlist]/[webpack]/lib/NormalModuleFactory.js:670:25
-  
-  - NormalModuleFactory.js:855 
-    [Wandrlist]/[webpack]/lib/NormalModuleFactory.js:855:8
-  
-  - NormalModuleFactory.js:975 
-    [Wandrlist]/[webpack]/lib/NormalModuleFactory.js:975:5
-  
-  - child-compiler.js:169 
-    [Wandrlist]/[html-webpack-plugin]/lib/child-compiler.js:169:18
-  
-  - Compiler.js:551 finalCallback
-    [Wandrlist]/[webpack]/lib/Compiler.js:551:5
-  
-  - Compiler.js:577 
-    [Wandrlist]/[webpack]/lib/Compiler.js:577:11
-  
-  - Compiler.js:1196 
-    [Wandrlist]/[webpack]/lib/Compiler.js:1196:17
-  
-  
-  - Hook.js:18 Hook.CALL_ASYNC_DELEGATE [as _callAsync]
-    [Wandrlist]/[tapable]/lib/Hook.js:18:14
-  
-  - Compiler.js:1192 
-    [Wandrlist]/[webpack]/lib/Compiler.js:1192:33
-  
-  - Compilation.js:2787 finalCallback
-    [Wandrlist]/[webpack]/lib/Compilation.js:2787:11
-  
-  - Compilation.js:3092 
-    [Wandrlist]/[webpack]/lib/Compilation.js:3092:11
-  
-  
-</pre>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WandrList</title>
+    <link rel="stylesheet" href="styles/styles.css" />
+  <script defer src="/bundle.js"></script></head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
