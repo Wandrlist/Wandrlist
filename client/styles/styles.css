@@ -19,17 +19,25 @@
   align-items: center;
   background-color: beige;
   width: 200px;
-  border-radius: 5%;
+  margin-left: 50px;
+}
+
+.itineraryContainer {
+  display: flex;
+  justify-content: center;
+  background-color: rgb(198, 198, 198);
+
   margin-left: 50px;
 }
 
 .itineraryColumns {
   display: flex;
   justify-content: center;
-  background-color: rgb(198, 198, 198);
-  width: 200px;
-  border-radius: 5%;
-  margin-left: 50px;
+  background-color: rgb(178, 41, 41);
+  width: 100px;
+  position: relative;
+  margin-top: 50px;
+  margin-bottom: 25px;
 }
 
 h1 {
