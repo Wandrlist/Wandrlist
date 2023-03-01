@@ -1,4 +1,37 @@
 .mapContainer {
-  width: 50%;
+  width: 400px;
   height: 400px;
+}
+
+.searchAndSubmitContainer {
+  display: flex;
+}
+
+.itineraryPageContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.activitiesColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: beige;
+  width: 200px;
+  border-radius: 5%;
+  margin-left: 50px;
+}
+
+.itineraryColumns {
+  display: flex;
+  justify-content: center;
+  background-color: rgb(198, 198, 198);
+  width: 200px;
+  border-radius: 5%;
+  margin-left: 50px;
+}
+
+h1 {
+  font-size: large;
 }
