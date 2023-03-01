@@ -1,12 +1,12 @@
-const express = require("express");
-const path = require("path");
-const cookieParser = require("cookie-parser");
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
 const cookieController = require('./controllers/cookieControllers');
 const app = express();
 const PORT = 3000;
 const mongoose = require('mongoose');
-const userController = require("./controllers/userControllers");
-const mongo_URI = require(mongo_URI);
+const userController = require('./controllers/userControllers');
+const mongo_URI = require('../.env');
 
 //connect to MongoDB
   mongoose.set("strictQuery", false);
@@ -36,29 +36,45 @@ app.use(express.static(path.resolve(__dirname, "../client")));
 app.use('/', express.static(path.join(__dirname, '../dist')));
 
 
-//route handlers
-
+// route handlers
+  // routes for user
 app.post('/signup', userController.createUser, cookieController.setSSIDCookie, (req, res) => {
-  res.status(200).json(res.locals.data);
+  res.status(200).json(res.locals.message);
 });
 
 app.get('/login',  cookieController.verifySSIDCookie, userController.getAllItineraries, (req, res) => {
-  res.status(200).json(res.locals.data);
+  res.status(200).json(res.locals.itineraries);
 });
 
+app.post('/login',  userController.verifyUser, cookieController.setSSIDCookie, userController.getAllItineraries, (req, res) => {
+  res.status(200).json(res.locals.itineraries);
+});
 
+app.get("/logout", cookieController.logoutCookie, (req, res) => {
+  return res.sendStatus(200);
+});
 
+  // routes for itinerary 
+app.post("/itinerary", userController.createItinerary, (req, res) => {
+  return res.status(200).json(res.locals.itin);
+});
 
+app.patch("/itinerary", userController.updateItinerary, (req, res) => {
+  return res.status(200).json(res.locals.itin);
+});
 
+app.delete("/itinerary", userController.deleteItinerary, (req, res) => {
+  return res.status(200).json(res.locals.itin);
+});
 
+  // routes for activities
+app.get("/activity", userController.getActivities, (req, res) => {
+  return res.status(200).json(res.locals.activities);
+});
 
-
-
-
-
-
-
-
+app.post("/activity", userController.updateActivities, (req, res) => {
+  return res.status(200).json(res.locals.activities);
+});
 
 //catch all 404 handler
 // app.use('*', (req, res) => res.sendStatus(404));

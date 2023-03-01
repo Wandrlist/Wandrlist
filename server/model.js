@@ -1,30 +1,38 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
+const Schema = mongoose.Schema;
+
+const SALT_WORK_FACTOR = 10;
 
 //collection for Users
 const userSchema = new mongoose.Schema ({
   email: {type : String, required : true, unique : true},
   password: {type : String, rquired : true},
-  itineraries: [{type : ObjectId, ref: 'Itinerary'}],
+  itineraries: {type: [{type : Schema.Types.ObjectId, ref: 'Itinerary'}], default: []},
 });
+
+userSchema.pre('save', function (next) {
+  const salt = bcrypt.genSaltSync(SALT_WORK_FACTOR);
+  this.password = bcrypt.hashSync(this.password, salt);
+  next();
+})
 
 //collection for Itineraries
 const itinerarySchema = new mongoose.Schema ({
   title: {type: String, default: 'My trip'},
   dateStart: {type: Date, required: true},
-  duration: {type : number, required: true},
-  locations: [{type : string}],
-  activities: [{type : ObjectId, ref: 'Activity'}],
-})
+  duration: {type : Number, required: true},
+  locations: [{type : String}],
+  activities: {type: [{type : Schema.Types.ObjectId, ref: 'Activity'}], default: []}
+});
 
 //collection for Activities
-const curIndex = 0; //setting default index, each activity created will have a default value incremented from the previous one
 const activitySchema = new mongoose.Schema ({
   title: {type: String, default: 'My activity'},
-  index: {type: Number, default: curIndex++},
   date: {type: Date, required: true},
-  location: {type: string, required: true},
-  type: {type: string},
-})
+  location: {type: String, required: true},
+  type: {type: String},
+});
 
 const User = mongoose.model('User', userSchema);
 const Itinerary = mongoose.model('Itinerary', itinerarySchema);
