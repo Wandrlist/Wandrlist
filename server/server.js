@@ -67,17 +67,7 @@ app.delete("/itinerary", userController.deleteItinerary, (req, res) => {
   return res.status(200).json(res.locals.message);
 });
 
-//   // routes for activities
-// app.get("/activity", userController.getActivities, (req, res) => {
-//   return res.status(200).json(res.locals.activities);
-// });
-
-// app.post("/activity", userController.updateActivities, (req, res) => {
-//   return res.status(200).json(res.locals.activities);
-// });
-
 //catch all 404 handler
-// app.use('*', (req, res) => res.sendStatus(404));
 app.get("*", (req, res) => {
   res.status(404).send("Page not found");
 });
