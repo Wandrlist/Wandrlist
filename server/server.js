@@ -58,7 +58,7 @@ app.get("/logout", cookieController.logoutCookie, (req, res) => {
   return res.sendStatus(200);
 });
 
-  // routes for itinerary 
+  // routes for itinerary
 app.post("/itinerary", userController.createItinerary, (req, res) => {
   return res.status(200).json(res.locals.itinerary);
 });
