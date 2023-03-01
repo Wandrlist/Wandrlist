@@ -56,25 +56,25 @@ app.get("/logout", cookieController.logoutCookie, (req, res) => {
 
   // routes for itinerary 
 app.post("/itinerary", userController.createItinerary, (req, res) => {
-  return res.status(200).json(res.locals.itin);
+  return res.status(200).json(res.locals.itinerary);
 });
 
 app.patch("/itinerary", userController.updateItinerary, (req, res) => {
-  return res.status(200).json(res.locals.itin);
+  return res.status(200).json(res.locals.message);
 });
 
 app.delete("/itinerary", userController.deleteItinerary, (req, res) => {
-  return res.status(200).json(res.locals.itin);
+  return res.status(200).json(res.locals.message);
 });
 
-  // routes for activities
-app.get("/activity", userController.getActivities, (req, res) => {
-  return res.status(200).json(res.locals.activities);
-});
+//   // routes for activities
+// app.get("/activity", userController.getActivities, (req, res) => {
+//   return res.status(200).json(res.locals.activities);
+// });
 
-app.post("/activity", userController.updateActivities, (req, res) => {
-  return res.status(200).json(res.locals.activities);
-});
+// app.post("/activity", userController.updateActivities, (req, res) => {
+//   return res.status(200).json(res.locals.activities);
+// });
 
 //catch all 404 handler
 // app.use('*', (req, res) => res.sendStatus(404));

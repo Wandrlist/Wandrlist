@@ -17,29 +17,23 @@ userSchema.pre('save', function (next) {
   next();
 })
 
-//collection for Itineraries
+//collection for Itineraries (with activities included as an array of activities)
 const itinerarySchema = new mongoose.Schema ({
   title: {type: String, default: 'My trip'},
   dateStart: {type: Date, required: true},
   duration: {type : Number, required: true},
   locations: [{type : String}],
-  activities: {type: [{type : Schema.Types.ObjectId, ref: 'Activity'}], default: []}
+  activities: {type: [{
+    location: String,
+    date: {type: Date, required: true},
+  }], default: []}
 });
 
-//collection for Activities
-const activitySchema = new mongoose.Schema ({
-  title: {type: String, default: 'My activity'},
-  date: {type: Date, required: true},
-  location: {type: String, required: true},
-  type: {type: String},
-});
 
 const User = mongoose.model('User', userSchema);
 const Itinerary = mongoose.model('Itinerary', itinerarySchema);
-const Activity = mongoose.model('Activity', activitySchema);
 
 module.exports = {
   User,
   Itinerary,
-  Activity
 }

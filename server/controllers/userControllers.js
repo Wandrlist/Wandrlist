@@ -54,6 +54,7 @@ userController.verifyUser = (req, res, next) => {
       } else {
         res.locals._id = data._id;
         res.locals.data = data;
+        res.locals.message = true;
         return next(); 
       }
     })
@@ -86,19 +87,10 @@ userController.getAllItineraries = (req, res, next) => {
   return next();
 };
 
-//grabbing one itinerary
-// userController.getItinerary = (req, res, next) => {
-//     Itinerary.findById(_id, 'activities', (err, itinerary) => {
-//         if (err) return next('Error in userController.getItinerary: ' + JSON.stringify(err));
-
-//         res.locals.itinerary = itinerary;
-//     })
-//     console.log(res.locals.itinerary);
-//     return next();
-// };
 
 //create an itinerary
 userController.createItinerary = (req, res, next) => {
+  const userID = req.cookies.ssid;
   const { title, dateStart, duration, location } = req.body;
   if (title && dateStart && duration && location) {
     Itinerary.create({
@@ -109,6 +101,12 @@ userController.createItinerary = (req, res, next) => {
     })
     .then(data => {
       res.locals.itinerary = data;
+      User.findById(userID, 'itineraries')
+        .then(res => {
+          res.itineraries.push(data);
+          User.updateOne({ _id : userID }, { itineraries : res.itineraries }).exec()
+        })
+      return next();
     })
     .catch((err) => {
       return next({
@@ -128,16 +126,25 @@ userController.createItinerary = (req, res, next) => {
   }
 };
 
-//delete an itinerary
+//delete an itinerary 
 userController.deleteItinerary = (req, res, next) => {
   const { _id, title } = req.body;
+  const userID = req.cookies.ssid;
+  User.findById(userID, 'itineraries')
+    .then(res => {
+      const index = res.itineraries.indexOf(_id);
+      res.itineraries.splice(index, 1);
+      console.log(res.itineraries);
+      User.updateOne({ _id : userID }, { itineraries : [...res.itineraries] }).exec();
+    })
   Itinerary.deleteOne({ _id: _id })
-  .then(count => {
-    if (count === 1) {
+  .then(data => {
+    if (data.deletedCount === 1) {
       res.locals.message = `${title} successfully deleted!`
     } else {
       res.locals.message = `Nothing was deleted.`
     }
+    return next();
   })
   .catch((err) => {
     return next({
@@ -152,40 +159,30 @@ userController.deleteItinerary = (req, res, next) => {
 //make changes to an itinerary
 userController.updateItinerary = (req, res, next) => {
   
-  return next();
-};
-
-//get all activities of an itenerary
-userController.getActivities = async (req, res, next) => {
-  const { _id } = req.body;
-  res.locals.activities = [];
-  const activities = await Itinerary.findById(_id, 'activities');
-  for(let i = 0; i < activities.length; i++){
-      Activity.findOne({ _id: activities[i] })
-          .then(data => {
-              if(data !== null) res.locals.activities.push(data);
-              else {
-                  return next({
-                    log: 'userController.getActivities: Activities not found!',
-                    message: {err: 'Itinerary does not have any activities'}
-                  });
-                }
-          })  
-          .catch (err => {
-              return next({
-                log: 'userController.getActivities: ' + err,
-                message: {err: 'Something went wrong in the query'}
-              });
-          });    
-  }
-  console.log(res.locals.activities);
-  return next();    
-};
-
-//overwrite all activities of the itinerary with user changes
-userController.updateActivities = (req, res, next) => {
-
-  return next();
+  const { _id, title, dateStart, duration, locations, activities} = req.body;
+  Itinerary.updateOne({ _id: _id}, {
+    title: title,
+    dateStart: dateStart,
+    duration: duration,
+    locations: locations,
+    activities: activities,
+  })
+  .then(data => {
+    if (data.acknowledged === true) {
+      res.locals.message = `${title} was updated!`
+    } else {
+      res.locals.message = `Nothing was updated`
+    }
+    return next();
+  })    
+  .catch((err) => {
+    return next({
+      log: `userController.updateItinerary: Error: ${err}`,
+      message: {
+        err: "Error occured in userController.updateItinerary, check server logs for more details",
+      },
+    });
+  })  
 };
 
 module.exports = userController;
