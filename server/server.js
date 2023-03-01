@@ -31,7 +31,7 @@ app.use((req, res, next) => {
 });
 
 //serve static files (css and html)
-app.use(express.static(path.resolve(__dirname, "../client")));
+// app.use(express.static(path.resolve(__dirname, "../client")));
 // statically serve everything in the build folder on the route '/dist'
 app.use('/', express.static(path.join(__dirname, '../dist')));
 
@@ -43,7 +43,11 @@ app.post('/signup', userController.createUser, cookieController.setSSIDCookie, (
 });
 
 app.get('/login',  cookieController.verifySSIDCookie, userController.getAllItineraries, (req, res) => {
-  res.status(200).json(res.locals.itineraries);
+  if (res.locals.loggedIn) {
+    res.status(200).json(res.locals.itineraries);
+  } else {
+    res.status(200).json("NOT A USER");
+  }
 });
 
 app.post('/login',  userController.verifyUser, cookieController.setSSIDCookie, userController.getAllItineraries, (req, res) => {

@@ -95,7 +95,7 @@ export default function TestingMap() {
           <GoogleMap
             id="map"
             mapContainerClassName="mapContainer"
-            zoom={8}
+            zoom={11}
             center={center}
             onLoad={(map) => {
               map.setOptions({ minZoom: 2, maxZoom: 20 });
@@ -108,7 +108,8 @@ export default function TestingMap() {
               />
             ))}
           </GoogleMap>
-          <div>
+            <br />
+            <div className="searchPlace">
             <form onSubmit={handleFormSubmit}>
               <Autocomplete
                 onLoad={(autocomplete) => setAutocomplete(autocomplete)}
@@ -116,6 +117,7 @@ export default function TestingMap() {
               >
                 <input
                   type="text"
+                  id="inputStyle"
                   placeholder="Search for a place"
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
@@ -124,7 +126,7 @@ export default function TestingMap() {
               </Autocomplete>
               <button type="submit">Search</button>
             </form>
-          </div>
+            </div>
         </div>
 
         <div className="activitiesColumn">

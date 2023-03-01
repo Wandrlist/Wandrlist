@@ -1,10 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
+
+
 body {
   background-color: rgb(235, 235, 235);
+  font-family: 'Montserrat';
 }
 
 h2 {
   font-size: large;
 }
+
+#inputStyle {
+  font-family: 'Montserrat';
+  width: 200px
+}
+
+button {
+  font-family: 'Montserrat';
+}
+
+/* login page */
+
+.loginPage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loginContainer {
+  display: flex;
+  align-items: center;
+  background-color: rgba(112, 80, 80, 0.416);
+  width: 300px;
+  height: 200px;
+  margin: 5px 10px 5px 50px;
+}
+
+.loginForm {
+  margin: 5px 10px 5px 50px;
+}
+
+.noAccount {
+  margin: 5px 10px 5px 50px;
+}
+
+/* signup page */
+
+.signupPage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.signupContainer {
+  display: flex;
+  align-items: center;
+  background-color: rgb(198, 198, 198);
+  width: 300px;
+  height: 200px;
+  margin: 5px 10px 5px 50px;
+}
+
+.signupForm {
+  margin: 5px 10px 5px 50px;
+}
+
+.goBackLogin {
+  margin: 5px 10px 5px 50px;
+}
+
+/* itinerary page */
 
 .pageTitle {
   text-align: center;
@@ -20,11 +85,11 @@ h2 {
 
 .mapContainer {
   width: 500px;
-  height: 500px;
+  height: 700px;
 }
 
-.searchAndSubmitContainer {
-  display: flex;
+.searchPlace {
+  display: inline-block;
 }
 
 .activitiesColumn {

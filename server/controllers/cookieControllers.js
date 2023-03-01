@@ -12,10 +12,17 @@ cookieController.setSSIDCookie = (req, res, next) => {
 // verify ssid cookie
 cookieController.verifySSIDCookie = (req, res, next) => {
   const { ssid } = req.cookies;
+  
   User.findOne({ _id: ssid })
     .then((data) => {
-      res.locals.data = data;
-      return next();
+      if (data !== null) {
+        res.locals.loggedIn = true;
+        res.locals.data = data;
+        return next();
+      } else {
+        res.locals.loggedIn = false;
+        return next();
+      }
     })
     .catch((err) => {
       return next({

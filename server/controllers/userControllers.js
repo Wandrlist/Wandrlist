@@ -41,14 +41,14 @@ userController.verifyUser = (req, res, next) => {
         return next({
           log: `userController.verifyUser: email is invalid.`,
           message: {
-            err: "Error occured in userController.createUser, email/password invaid.",
+            err: "Error occured in userController.verifyUser, email/password invaid.",
           },
         })
       } else if (!bcrypt.compareSync(password, data.password)) {
         return next({
           log: `userController.verifyUser: password is invalid.`,
           message: {
-            err: "Error occured in userController.createUser, email/password invaid.",
+            err: "Error occured in userController.verifyUser, email/password invaid.",
           },
         })
       } else {
@@ -62,28 +62,30 @@ userController.verifyUser = (req, res, next) => {
       return next({
         log: `userController.verifyUser: Error: ${err}.`,
         message: {
-          err: "Error occured in userController.createUser, error creating a user.",
+          err: "Error occured in userController.verifyUser, error in verifying a user.",
         },
       })
     })
 };
 
 //grabbing all user's itineraries once they log in
-userController.getAllItineraries = (req, res, next) => {
+userController.getAllItineraries = async (req, res, next) => {
+  if (!res.locals.loggedIn) return next();
   const itineraries = res.locals.data.itineraries;
   res.locals.itineraries = [];
   for (let i = 0; i < itineraries.length; i++) {
-    Itinerary.find({ _id : itineraries[i] }, (err, itinerary) => {
-      if (err) return next({
-        log: `userController.getAllItineraries: Error: ${err}.`,
-        message: {
-          err: "Error occured in userController.getAllItineraries, error getting itineraries",
-        },
-      });
-      res.locals.itineraries.push(itinerary);
-    })
+    try {
+      const response = await Itinerary.findById(itineraries[i]).exec()
+      res.locals.itineraries.push(response._id);
+    } catch (error) {
+        return next({
+          log: `userController.getAllItineraries: Error: ${err}.`,
+          message: {
+            err: "Error occured in userController.getAllItineraries, error creating a user.",
+          },
+        })
+    }
   }
-  console.log(res.locals.itineraries);
   return next();
 };
 
@@ -92,7 +94,7 @@ userController.getAllItineraries = (req, res, next) => {
 userController.createItinerary = (req, res, next) => {
   const userID = req.cookies.ssid;
   const { title, dateStart, duration, location } = req.body;
-  if (title && dateStart && duration && location) {
+  if (dateStart && duration) {
     Itinerary.create({
       title: title,
       dateStart: dateStart,
