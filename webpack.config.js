@@ -47,10 +47,10 @@ module.exports = {
     compress: true,
     port: 8080,
     proxy: {
-      "/api": {
+      "/": {
         target: "http://localhost:3000", //redirects requests to 3000 from 8080 if in dev
-        pathRewrite: { "^/api": "" }, //do not call localhost:3000 directly, so make all fetch reqs to /api first
-        changeOrigin: true,
+        // pathRewrite: { "^/api": "" }, //do not call localhost:3000 directly, so make all fetch reqs to /api first
+        // changeOrigin: true,
       },
     },
     hot: true,
