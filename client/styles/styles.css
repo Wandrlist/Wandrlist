@@ -1,45 +1,92 @@
+body {
+  background-color: rgb(235, 235, 235);
+}
+
+h2 {
+  font-size: large;
+}
+
+.pageTitle {
+  text-align: center;
+}
+
+.itineraryPageContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  margin-left: 25px;
+  margin-right: 25px;
+}
+
 .mapContainer {
-  width: 400px;
-  height: 400px;
+  width: 500px;
+  height: 500px;
 }
 
 .searchAndSubmitContainer {
   display: flex;
 }
 
-.itineraryPageContainer {
-  display: flex;
-  justify-content: center;
-  margin-top: 50px;
-}
-
 .activitiesColumn {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: beige;
+  background-color: rgba(255, 255, 255, 0.603);
   width: 200px;
   margin-left: 50px;
+}
+
+.activities {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  min-width: 175px;
+  position: relative;
+  margin-top: 10px;
+  margin-bottom: 25px;
+  margin-left: 20px;
+  margin-right: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  overflow: visible;
+}
+
+.activityBox {
+  margin: 0px 10px 10px 10px;
+  padding: 5px 5px 5px 5px;
+  background-color: rgba(112, 80, 80, 0.416);
+}
+
+.fullItineraryContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgb(198, 198, 198);
+  margin-left: 50px;
+  overflow: auto;
+  overflow-y: hidden;
 }
 
 .itineraryContainer {
   display: flex;
   justify-content: center;
   background-color: rgb(198, 198, 198);
-
-  margin-left: 50px;
+  height: 70vh;
+  width: 80vh;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 .itineraryColumns {
   display: flex;
   justify-content: center;
-  background-color: rgb(178, 41, 41);
-  width: 100px;
+  background-color: rgba(112, 80, 80, 0.416);
+  min-width: 175px;
   position: relative;
-  margin-top: 50px;
+  margin-top: 10px;
   margin-bottom: 25px;
-}
-
-h1 {
-  font-size: large;
+  margin-left: 20px;
+  margin-right: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }

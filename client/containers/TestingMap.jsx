@@ -87,55 +87,66 @@ export default function TestingMap() {
   if (!isLoaded) return "Loading Maps...";
 
   return (
-    <div className="itineraryPageContainer">
-      <div>
-        <GoogleMap
-          id="map"
-          mapContainerClassName="mapContainer"
-          zoom={8}
-          center={center}
-          onLoad={(map) => {
-            map.setOptions({ minZoom: 2, maxZoom: 20 });
-          }}
-        >
-          {markers.map((marker, index) => (
-            <Marker
-              key={index}
-              position={{ lat: marker.lat, lng: marker.lng }}
-            />
-          ))}
-        </GoogleMap>
+    <div>
+      <h1 className="pageTitle">Trip 1</h1>
+      <div className="itineraryPageContainer">
+        <br></br>
         <div>
-          <form onSubmit={handleFormSubmit}>
-            <Autocomplete
-              onLoad={(autocomplete) => setAutocomplete(autocomplete)}
-              onPlaceChanged={handlePlaceSelect}
-            >
-              <input
-                type="text"
-                placeholder="Search for a place"
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                ref={inputRef}
+          <GoogleMap
+            id="map"
+            mapContainerClassName="mapContainer"
+            zoom={8}
+            center={center}
+            onLoad={(map) => {
+              map.setOptions({ minZoom: 2, maxZoom: 20 });
+            }}
+          >
+            {markers.map((marker, index) => (
+              <Marker
+                key={index}
+                position={{ lat: marker.lat, lng: marker.lng }}
               />
-            </Autocomplete>
-            <button type="submit">Search</button>
-          </form>
+            ))}
+          </GoogleMap>
+          <div>
+            <form onSubmit={handleFormSubmit}>
+              <Autocomplete
+                onLoad={(autocomplete) => setAutocomplete(autocomplete)}
+                onPlaceChanged={handlePlaceSelect}
+              >
+                <input
+                  type="text"
+                  placeholder="Search for a place"
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  ref={inputRef}
+                />
+              </Autocomplete>
+              <button type="submit">Search</button>
+            </form>
+          </div>
         </div>
-      </div>
 
-      <div className="activitiesColumn">
-        <h1>My Activities</h1>
-        <div>
-          {userInputs.map((input, index) => (
-            <div key={index}>{input}</div>
-          ))}
+        <div className="activitiesColumn">
+          <h2>My Activities</h2>
+          <div className="activities">
+            {userInputs.map((input, index) => (
+              <div className="activityBox" key={index}>
+                {input}
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
 
-      <div className="itineraryContainer">
-        <h1>My Itinerary</h1>
-        <div className="itineraryColumns"></div>
+        <div className="fullItineraryContainer">
+          <h2>My Itinerary</h2>
+          <div className="itineraryContainer">
+            <div className="itineraryColumns">Day 1</div>
+            <div className="itineraryColumns">Day 2</div>
+            <div className="itineraryColumns">Day 3</div>
+            <div className="itineraryColumns">Day 3</div>
+          </div>
+        </div>
       </div>
     </div>
   );
