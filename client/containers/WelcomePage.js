@@ -1,14 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState} from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Form, FormGroup, InputGroup, Button, Modal } from 'react-bootstrap';
+import axios from 'axios';
 
 export default function WelcomePage() {
   const [itinerary, setItinerary] = useState({
     title: '',
-    date: '',
+    dateStart: '',
     duration: '',
     location: ''
   });
+  const [sampleItinerary, setSampleItinerary] = useState({
+    title: 'My Trip',
+    dateStart: '2023-03-01',
+    duration: 6,
+    location: 'Paris'
+  });
+
   const [show, setShow] = useState(false);
+  const navigate = useNavigate();
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -25,6 +35,13 @@ export default function WelcomePage() {
 
   const createItinerary = () => {
     setShow(false);
+    axios
+      .post('/api/itinerary', sampleItinerary)
+      .then(res => {
+        console.log('data successfuly created');
+        navigate('/itinerary');
+      })
+      .catch(err => console.log('error occured in createItinerary axios', err));
   };
 
   return (
@@ -76,7 +93,7 @@ export default function WelcomePage() {
                 placeholder='duration'
                 onChange={handleChange}
               />
-              <Form.Label>Duration</Form.Label>
+              <Form.Label>Location</Form.Label>
               <Form.Control
                 name='location'
                 value={itinerary.location}
