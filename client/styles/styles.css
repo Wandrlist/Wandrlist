@@ -43,3 +43,36 @@
 h1 {
   font-size: large;
 }
+
+.welcomePageContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.listItineraries {
+  background-color:beige;
+  width: 40%;
+  height: 80vh;
+  margin-top: 5%;
+  margin-left: 2%
+
+}
+
+.searchItinerary {
+  margin-left: 10rem;
+  width: 30%;
+}
+
+.load {
+  width: 40%;
+}
+
+.create {
+  width: 40%;
+  margin-right: 20%;
+}
+
+.listItinerariesH2 {
+  text-align: center;
+}

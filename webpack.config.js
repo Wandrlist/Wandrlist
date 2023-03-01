@@ -12,18 +12,26 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
-        exclude: /node_modules/,
-        loader: "babel-loader",
-        options: {
-          presets: ["@babel/preset-env", "@babel/preset-react"],
-        },
+        test: /bootstrap\.min\.css$/,
+        use: ['raw-loader']
       },
       {
-        test: /.(css|scss)$/,
+        test: /\.(css|scss)$/i,
         include: path.resolve(__dirname, "client"),
         exclude: /node_modules/,
         use: ["style-loader", "css-loader", "postcss-loader"],
+      },
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: ['@babel/preset-env', '@babel/preset-react']
+            }
+          }
+        ]
       },
       {
         test: /\.(png|jpe?g|gif)$/i, //image loader for logo
