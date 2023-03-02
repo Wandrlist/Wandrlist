@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import wandrlist_logo from '../../Images/wandrlist_logo.png'
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -10,8 +11,10 @@ export default function Login() {
 
   const checkCookie = async () => {
     const response =  await axios.get("api/login");
-    // if (response.data)
-    if (response) navigate("/welcome", { replace: true, state: { email, data: response.data } });
+    console.log(response);
+    if (response.data !== 'NOT A USER') {
+      if (response) navigate("/welcome", { replace: true, state: { email: response.data.email, itineraries: response.data.itineraries } });
+    }
   };
   
   useEffect(() => {
@@ -27,7 +30,9 @@ export default function Login() {
         email,
         password,
       });
-      if (response) navigate("/welcome", { replace: true, state: email });
+      if (response.data !== 'NOT A USER') {
+        if (response) navigate("/welcome", { replace: true, state: { email: response.data.email, itineraries: response.data.itineraries } });
+      };
     } catch (error) {
       setError("Invalid Email or Password");
       console.log("error: ", error);
@@ -36,12 +41,8 @@ export default function Login() {
 
   return (
     <div className="loginPage">
-      <div>WandrList</div>
-      <img 
-                src="https://www.flaticon.com/free-icons/travelling" title="travelling icons"
-                id="travelingIcon"
-                alt="new"
-                />
+      {/* <div>WandrList</div> */}
+      <img src={wandrlist_logo} alt="wandrlist-logo"/>
 
       <div className="loginContainer">
         <div>

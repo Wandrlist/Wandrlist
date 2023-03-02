@@ -15,6 +15,7 @@ cookieController.verifySSIDCookie = (req, res, next) => {
   
   User.findOne({ _id: ssid })
     .then((data) => {
+      console.log(data);
       if (data !== null) {
         res.locals.loggedIn = true;
         res.locals.data = data;

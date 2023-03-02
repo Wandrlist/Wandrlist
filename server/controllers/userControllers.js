@@ -6,7 +6,7 @@ const userController = {};
 //create a new user
 userController.createUser = (req, res, next) => {
   const { email, password } = req.body;
-
+  console.log(req.body);
   if (email && password) {
     User.create({ email, password })
       .then((data) => {
@@ -34,7 +34,6 @@ userController.createUser = (req, res, next) => {
 //checking password during login
 userController.verifyUser = (req, res, next) => {
   const { email, password } = req.body;
-  
   User.findOne({ email })
     .then((data) => {
       if (data === null) {
@@ -71,12 +70,13 @@ userController.verifyUser = (req, res, next) => {
 //grabbing all user's itineraries once they log in
 userController.getAllItineraries = async (req, res, next) => {
   if (!res.locals.loggedIn) return next();
+  res.locals.email = res.locals.data.email;
   const itineraries = res.locals.data.itineraries;
   res.locals.itineraries = [];
   for (let i = 0; i < itineraries.length; i++) {
     try {
       const response = await Itinerary.findById(itineraries[i]).exec()
-      res.locals.itineraries.push(response._id);
+      res.locals.itineraries.push(response);
     } catch (error) {
         return next({
           log: `userController.getAllItineraries: Error: ${err}.`,
@@ -94,6 +94,7 @@ userController.getAllItineraries = async (req, res, next) => {
 userController.createItinerary = (req, res, next) => {
   const userID = req.cookies.ssid;
   const { title, dateStart, duration, location } = req.body;
+  console.log(req.body);
   if (dateStart && duration) {
     Itinerary.create({
       title: title,

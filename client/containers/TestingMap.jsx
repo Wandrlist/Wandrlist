@@ -1,22 +1,19 @@
 // require("dotenv").config();
 import React, { useState, useRef, useCallback } from "react";
+import { useLocation } from "react-router-dom";
 import {
   GoogleMap,
   useLoadScript,
   Marker,
   Autocomplete,
 } from "@react-google-maps/api";
+import { apiKey } from '../../.env'
 import Geocode from "react-geocode";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
-const apiKey = "AIzaSyAFJmCtle - yWm4y0f2R2mURCuE3z_IoWb4";
 const mapApiJs = "https://maps.googleapis.com/maps/api/js";
-
 const libraries = ["places"];
 
-const center = {
-  lat: 37.7749,
-  lng: -122.4194,
-};
 
 export default function TestingMap() {
   const [markers, setMarkers] = useState([]); //array of marker coordinates
@@ -24,6 +21,12 @@ export default function TestingMap() {
   const [inputValue, setInputValue] = useState(""); //value of the input field in the search bar
   const [userInputs, setUserInputs] = useState([]); //array of user-entered place names
   const inputRef = useRef(null); //ref to access the input field in the search bar
+  const previous = useLocation(); 
+  const { title, activities, location, duration } = previous.state;
+  const [center, setCenter] = useState({
+    lat: 37.7749, 
+    lng: -122.4194,
+  })
 
   //loads map
   const { isLoaded, loadError } = useLoadScript({
@@ -38,8 +41,13 @@ export default function TestingMap() {
     if (!addressObject) {
       return;
     }
-    const { formatted_address, geometry } = addressObject;
+    const { formatted_address, geometry, name } = addressObject;
     if (geometry) {
+      setCenter({
+        lat: geometry.viewport.Ua.lo,
+        lng: geometry.viewport.Ia.lo,
+      })
+      //console.log(addressObject);
       //add marker
       setMarkers((currentMarkers) => [
         ...currentMarkers,
@@ -47,7 +55,7 @@ export default function TestingMap() {
       ]);
     }
     //add place name to userInputs state variable
-    setUserInputs((prevUserInputs) => [...prevUserInputs, formatted_address]);
+    setUserInputs((prevUserInputs) => [...prevUserInputs, name]);
     setInputValue("");
   }, [autocomplete]);
 
@@ -86,16 +94,24 @@ export default function TestingMap() {
   if (loadError) return "Error loading maps";
   if (!isLoaded) return "Loading Maps...";
 
+
+  const days = [];
+  for (let i = 1; i <= duration; i++) {
+    days.push (
+      <div className="itineraryColumns">Day {i}</div>
+    )
+  }
+
   return (
     <div>
-      <h1 className="pageTitle">Trip 1</h1>
+      <h1 className="pageTitle">{title}</h1>
       <div className="itineraryPageContainer">
         <br></br>
         <div>
           <GoogleMap
             id="map"
             mapContainerClassName="mapContainer"
-            zoom={11}
+            zoom={10}
             center={center}
             onLoad={(map) => {
               map.setOptions({ minZoom: 2, maxZoom: 20 });
@@ -105,6 +121,7 @@ export default function TestingMap() {
               <Marker
                 key={index}
                 position={{ lat: marker.lat, lng: marker.lng }}
+                label = {(++index).toString()}
               />
             ))}
           </GoogleMap>
@@ -143,10 +160,7 @@ export default function TestingMap() {
         <div className="fullItineraryContainer">
           <h2>My Itinerary</h2>
           <div className="itineraryContainer">
-            <div className="itineraryColumns">Day 1</div>
-            <div className="itineraryColumns">Day 2</div>
-            <div className="itineraryColumns">Day 3</div>
-            <div className="itineraryColumns">Day 3</div>
+            {days}
           </div>
         </div>
       </div>

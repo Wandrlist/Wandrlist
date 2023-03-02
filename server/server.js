@@ -6,7 +6,7 @@ const app = express();
 const PORT = 3000;
 const mongoose = require('mongoose');
 const userController = require('./controllers/userControllers');
-const mongo_URI = require('../.env');
+const { mongo_URI } = require('../.env');
 
 //connect to MongoDB
   mongoose.set("strictQuery", false);
@@ -44,7 +44,7 @@ app.post('/signup', userController.createUser, cookieController.setSSIDCookie, (
 
 app.get('/login',  cookieController.verifySSIDCookie, userController.getAllItineraries, (req, res) => {
   if (res.locals.loggedIn) {
-    res.status(200).json(res.locals.itineraries);
+    res.status(200).json({ itineraries: res.locals.itineraries, email: res.locals.email });
   } else {
     res.status(200).json("NOT A USER");
   }

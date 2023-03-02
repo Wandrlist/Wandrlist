@@ -22,7 +22,7 @@ const itinerarySchema = new mongoose.Schema ({
   title: {type: String, default: 'My trip'},
   dateStart: {type: Date, required: true},
   duration: {type : Number, required: true},
-  locations: [{type : String}],
+  location: {type : String},
   activities: {type: [{
     location: String,
     date: {type: Date, required: true},

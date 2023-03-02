@@ -1,24 +1,22 @@
 import React, { useState} from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { Form, FormGroup, InputGroup, Button, Modal } from 'react-bootstrap';
 import axios from 'axios';
 
 export default function WelcomePage() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  if (!location.state) navigate("/");
+  const { email, itineraries } = location.state;
+  console.log(location.state);
   const [itinerary, setItinerary] = useState({
     title: '',
     dateStart: '',
     duration: '',
     location: ''
   });
-  const [sampleItinerary, setSampleItinerary] = useState({
-    title: 'My Trip',
-    dateStart: '2023-03-01',
-    duration: 6,
-    location: 'Paris'
-  });
 
   const [show, setShow] = useState(false);
-  const navigate = useNavigate();
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -36,7 +34,7 @@ export default function WelcomePage() {
   const createItinerary = () => {
     setShow(false);
     axios
-      .post('/api/itinerary', sampleItinerary)
+      .post('/api/itinerary', itinerary)
       .then(res => {
         console.log('data successfuly created');
         navigate('/itinerary');
@@ -44,10 +42,35 @@ export default function WelcomePage() {
       .catch(err => console.log('error occured in createItinerary axios', err));
   };
 
+  const loadItinerary = () => {
+    
+  } 
+
+  console.log(itineraries);
+  const itinDetail = [];
+  for (let i = 0; i < itineraries.length; i++) {
+    itinDetail.push(
+    <Link to='/itinerary' state = {{...itineraries[i]}}>
+    <div>
+      <h2>{itineraries[i].title}</h2>
+      <ul>
+      <li> Date: {itineraries[i].dateStart.split("T", 1)} </li>
+      <li> Days: {itineraries[i].duration} </li>
+      <li> Location: {itineraries[i].location || 'N/A'} </li>
+      </ul>
+      {/* <Button variant='info' onClick={loadItinerary}>Load </Button> */}
+    </div>
+    </Link>
+    )
+  }
+
+
+
   return (
     <div className='welcomePageContainer'>
       <div className='listItineraries'>
         <h2 className='listItinerariesH2'>List of Itineraries</h2>
+        <div>{itinDetail}</div>
       </div>
 
       <div className='searchItinerary'>
@@ -76,17 +99,17 @@ export default function WelcomePage() {
               <Form.Control
                 name='title'
                 value={itinerary.title}
-                placeholder='title'
+                placeholder='title (optional)'
                 onChange={handleChange}
               />
               <Form.Label>Date</Form.Label>
               <Form.Control
                 type='date'
-                name='date'
+                name='dateStart'
                 value={itinerary.date}
                 onChange={handleChange}
               />
-              <Form.Label>Duration</Form.Label>
+              <Form.Label>Duration (days)</Form.Label>
               <Form.Control
                 name='duration'
                 value={itinerary.duration}
@@ -97,7 +120,7 @@ export default function WelcomePage() {
               <Form.Control
                 name='location'
                 value={itinerary.location}
-                placeholder='location'
+                placeholder='location (optional)'
                 onChange={handleChange}
               />
             </FormGroup>

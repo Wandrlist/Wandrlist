@@ -17,7 +17,7 @@ export default function Signup() {
         password,
       });
       console.log(response);
-      if (response.data) navigate("/welcome", { replace: true, state: email });
+      if (response.data) navigate("/welcome", { replace: true, state: { email, itineraries: [] }});
     } catch (error) {
       setError("Can't Signup");
       console.log("error: ", error);
